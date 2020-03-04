@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -14,6 +13,12 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -22,13 +27,153 @@ android {
     }
 }
 
+buildscript {
+
+    // Kotlin
+    ext.kotlinVersion = '1.3.50'
+
+    // Android
+    ext.appCompatVersion = '1.1.0'
+    ext.materialVersion = '1.2.0-alpha05'
+    ext.coreUIVersion = '1.0.0'
+    ext.cardViewVersion = '1.0.0'
+    ext.annotationVersion = '1.0.0'
+    ext.coreVersion = '1.2.0'
+
+    // UI
+    ext.textDrawable = "1.0.1"
+    ext.picasso = "2.71828"
+    ext.constraintLayout = "2.0.0-beta4"
+
+    // Arch
+    ext.roomVersion = '2.0.0'
+    ext.lifecycleVersion = "2.2.0"
+
+    // Google Services
+    ext.playService = "17.0.0"
+    ext.playServicesAuth = "17.4.0"
+    ext.googleService = "4.2.0"
+    ext.workManager = "2.3.3"
+    ext.playServicesAnalytics = "17.0.0"
+
+    // FireBase
+    ext.fireBaseDynamicLink = "19.1.0"
+    ext.fireBaseCore = "17.2.3"
+    ext.fireBaseMassaging = "20.1.2"
+    ext.fireBaseConfig = "19.1.2"
+
+    // Dagger
+    ext.dagger = "2.25.2"
+
+    // Networking
+    ext.retrofit = "2.6.2"
+    ext.okHttp = "3.11.0"
+    ext.okHttpDownloader = "1.1.0"
+    ext.gson = "2.8.2"
+
+    // Logging
+    ext.timber = "4.7.1"
+
+    // Analytics
+    ext.crashlytics = "2.10.1"
+    ext.installreferrer = "1.1.1"
+
+    // Testing
+    ext.espresso = "3.1.1"
+    ext.kotlinMokito = "1.6.0"
+    ext.junit = "4.12"
+    ext.junitExtVersion = "1.1.0"
+    ext.androidMokito = "2.18.3"
+    ext.junitJacoco = "0.8.3"
+    ext.testRunner = "1.1.1"
+    ext.barista = "3.0.0"
+    ext.uiautomator = "2.1.3"
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+
+    // Dagger
+    implementation "com.google.dagger:dagger:$dagger"
+    implementation "com.google.dagger:dagger-android:$dagger"
+    implementation "com.google.dagger:dagger-android-support:$dagger"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+
+    // OkHttp
+    implementation "com.squareup.okhttp3:okhttp:$okHttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okHttp"
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:$okHttp"
+
+    // Gson
+    implementation "com.google.code.gson:gson:$gson"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$timber"
+
+    // TextDrawable
+    implementation "com.amulyakhare:com.amulyakhare.textdrawable:$textDrawable"
+
+    // Picasso
+    implementation "com.squareup.picasso:picasso:$picasso"
+
+    // Google Services
+    implementation "androidx.work:work-runtime:$workManager"
+    implementation "androidx.work:work-gcm:$workManager"
+    implementation "com.google.android.gms:play-services-location:$playService"
+    implementation "com.google.android.gms:play-services-gcm:$playService"
+    implementation "com.google.android.gms:play-services-maps:$playService"
+    implementation "com.google.android.gms:play-services-analytics:$playServicesAnalytics"
+    implementation "com.google.android.gms:play-services-auth-api-phone:$playServicesAuth"
+
+    // FireBase
+    implementation "com.google.firebase:firebase-core:$fireBaseCore"
+    implementation "com.google.firebase:firebase-config:$fireBaseConfig"
+    implementation "com.google.firebase:firebase-dynamic-links:$fireBaseDynamicLink"
+    implementation "com.google.firebase:firebase-messaging:$fireBaseMassaging"
+
+    // Room
+    implementation "androidx.room:room-runtime:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+
+    // LifeCycle
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+
+    // Analytics
+    implementation "com.android.installreferrer:installreferrer:$installreferrer"
+    implementation "com.crashlytics.sdk.android:crashlytics:$crashlytics"
+
+    // AndroidX
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "androidx.cardview:cardview:$cardViewVersion"
+    implementation "androidx.core:core-ktx:$coreVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayout"
+    annotationProcessor "androidx.annotation:annotation:$annotationVersion"
+
+    // Testing
+    testImplementation "org.mockito:mockito-android:$androidMokito"
+    testImplementation "junit:junit:$junit"
+    testImplementation "androidx.test.ext:junit:$junitExtVersion"
+    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$kotlinMokito"
+    testImplementation "androidx.test.espresso:espresso-core:$espresso"
+    testImplementation "androidx.test.espresso:espresso-intents:$espresso"
+    testImplementation "androidx.test.espresso:espresso-contrib:$espresso"
+    testImplementation "androidx.test.espresso.idling:idling-concurrent:$espresso"
+    testImplementation "androidx.test.espresso:espresso-web:$espresso"
+    testImplementation "com.schibsted.spain:barista:$barista"
+    testImplementation "com.android.support.test.uiautomator:uiautomator-v18:$uiautomator"
+    testImplementation "androidx.test:orchestrator:$testRunner"
+    testImplementation "androidx.room:room-testing:$roomVersion"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
