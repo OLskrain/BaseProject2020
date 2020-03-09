@@ -5,13 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.olskrain.baseproject2020.R
 import com.olskrain.baseproject2020.component.navigation.*
-import javax.inject.Inject
 
 /**
  * Created by Andrey Ievlev on 09,Март,2020
  */
 
-class NavigatorImpl @Inject constructor(
+class NavigatorImpl(
     private val activity: AppCompatActivity,
     @IdRes private val contentLayoutId: Int = R.id.content_frame
 ) : Navigator {
@@ -48,17 +47,14 @@ class NavigatorImpl @Inject constructor(
     }
 
     private fun backTo(destination: Class<out Destination>) {
-        var hasScreen = false
         for (i in fragmentManager.backStackEntryCount - 1 downTo 0) {
             if (destination.name == fragmentManager.getBackStackEntryAt(i).name) {
                 fragmentManager.popBackStackImmediate(destination.name, 0)
-                hasScreen = true
-                break
+                return
             }
         }
-        if (!hasScreen) {
-            backToRoot()
-        }
+
+        backToRoot()
     }
 
     private fun backToRoot() {
