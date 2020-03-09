@@ -1,9 +1,17 @@
 package com.olskrain.baseproject2020.app
 
-import android.app.Application
+import com.olskrain.baseproject2020.app.di.DaggerAppComponent
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 
 /**
  * Created by Andrey Ievlev on 09,Март,2020
  */
 
-class App : Application()
+class App : DaggerApplication() {
+
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
+        DaggerAppComponent
+            .factory()
+            .create(this, this, contentResolver)
+}
