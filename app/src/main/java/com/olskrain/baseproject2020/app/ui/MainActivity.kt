@@ -1,7 +1,8 @@
-package com.olskrain.baseproject2020
+package com.olskrain.baseproject2020.app.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.olskrain.baseproject2020.R
 
 class MainActivity : AppCompatActivity() {
 
